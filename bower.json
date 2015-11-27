@@ -1,0 +1,39 @@
+{
+  "name": "timeleaf",
+  "version": "0.0.1",
+  "authors": [
+    "skohar <skohar@users.noreply.github.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.3",
+    "components-font-awesome": "~4.3.0",
+    "underscore": "~1.8.2",
+    "angular-ui-router": "~0.2.13",
+    "angular-cookies": "~1.4.0",
+    "bootstrap": "~3.3.2",
+    "angular-bootstrap": "~0.13.0",
+    "angular-scroll": "~0.7.1",
+    "angular-resource": "~1.4.0",
+    "angular-ui-utils": "~0.2.3",
+    "angular": "~1.4.0",
+    "mousetrap": "~1.5.2",
+    "detectizr": "~2.0.0",
+    "twitter-text-tweetlength": "https://gist.githubusercontent.com/tsmd/7069883/raw/be3998fa3e52d55ae815177ae6618648e51876bb/twitter-text-tweetlength.js",
+    "angular-messages": "~1.4.0",
+    "ng-file-upload": "~5.0.0",
+    "checklist-model": "~0.2.4"
+  },
+  "overrides": {
+    "modernizr": {
+      "main": "modernizr.js"
+    }
+  }
+}

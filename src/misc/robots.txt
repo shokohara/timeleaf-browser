@@ -1,0 +1,7 @@
+Sitemap: http://skypeline.co/sitemap.xml
+User-agent: *
+Disallow: /profile
+Disallow: /sign-up
+Disallow: /history
+Disallow: /filter
+Disallow: /search

@@ -1,0 +1,36 @@
+doctype html
+head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='description', content='シンプルな見た目・１クリック投稿削除・１クリック再投稿・性別絞り込み表示')
+    meta(name='keywords', content='Skypeline,skypeline,line,Skype,掲示板,BBS,ID,コンタクト,彼女,彼氏,性別,プロフィール')
+    meta(name='fragment' content='!')
+    title .
+    base(href='/')
+    link(rel='shortcut icon', href='/assets/images/favicon.png', type='image/png')
+    link(rel='stylesheet' type='text/css' href='/css/main.css')
+    script(src='/js/main.js')
+    include ./template/browser-support-header.jade
+body(ng-app='app' resize="resize")
+    include ./template/google-analytics.jade
+    nav.navbar.navbar-default
+        .container
+            .navbar-header
+                button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+                    span.sr-only Toggle navigation
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                a.navbar-brand(href='' ui-sref='top') .
+            #bs-example-navbar-collapse-1.collapse.navbar-collapse
+                ul.nav.navbar-nav
+                    li
+                        a(href='' ui-sref='rooms/create') .
+                    li.hidden
+                        a(href='') .
+                ul.nav.navbar-nav.navbar-right
+                    li
+                        a(href='' ui-sref='users/update') .
+                    li.hidden
+                        a(href='') .
+    ui-view

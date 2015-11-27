@@ -1,0 +1,13 @@
+form
+    include ./sexes-form-part.jade
+    include ./prefectures-form-part.jade
+    div
+        .form-group
+            label(for="") 名前
+            input.form-control(type="text" ng-model="query.name" placeholder="任意")
+        .form-group
+            label(for="") skypeID
+            input.form-control(type="text" ng-model="query.skypeId" placeholder="任意")
+        .form-group
+            label(for="") 本文
+            input.form-control(type="text" ng-model="query.text" placeholder="任意")

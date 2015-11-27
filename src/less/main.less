@@ -1,0 +1,283 @@
+@import "../../bower_components/components-font-awesome/less/font-awesome.less";
+@import "../../bower_components/bootstrap/less/bootstrap.less";
+
+body {
+  background-position-x: 0%;
+  background-position-y: 40px;
+  tbody {
+    tr {
+      cursor: pointer;
+    }
+  }
+  ul.media-list-talks {
+    margin-bottom: 0;
+  }
+}
+
+.system-message {
+  color: #009933;
+}
+
+.pre {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+
+.tweet-box {
+  text-decoration: none;
+  background-color: #E5F2F7;
+}
+
+.stream-item {
+  cursor: pointer;
+  a.link {
+    display: block;
+    text-decoration: none;
+  }
+  &:hover {
+    background-color: #f5f8fa;
+  }
+  .name {
+    text-decoration: none;
+  }
+  .not-known {
+    color: #888;
+  }
+  .male {
+    color: #805BF5;
+  }
+  .female {
+    color: #E2529D;
+  }
+  .name:hover {
+    color: #0084B4;
+  }
+  .skype-id {
+    color: #8899a6;
+  }
+  .datetime {
+    color: #8899a6;
+    text-decoration: none;
+  }
+  .text {
+    color: #000;
+    text-decoration: none;
+  }
+}
+
+.img-responsive {
+  width: 100%;
+}
+
+.image-row {
+  margin-bottom: 15px;
+  .key {
+    text-align: right;
+    font-weight: bold;
+    padding-top: 7px;
+  }
+
+  .body
+  .dropzone {
+    min-height: 100px;
+  }
+}
+
+.navbar-default {
+  background-color: #fff;
+}
+
+footer {
+  .tw-button
+  iframe {
+    width: 93px !important;
+  }
+}
+
+@tag-margin: 5px;
+.tag {
+  margin-bottom: @tag-margin;
+  margin-right: @tag-margin;
+}
+
+.tags {
+  height: 159px;
+  overflow-y: scroll;
+}
+
+.masonry {
+  position: relative;
+}
+
+.fa-ban {
+  cursor: pointer;
+}
+
+.fa-pencil {
+  cursor: pointer;
+}
+
+.fa-eye-slash {
+  cursor: pointer;
+}
+
+.fa-wrench {
+  cursor: pointer;
+}
+
+.panel {
+  margin-bottom: 30px;
+  display: block;
+  text-decoration: none;
+  color: #333;
+  .profile-container {
+    overflow: hidden;
+    .profile {
+      overflow: hidden;
+      border-top-width: 0;
+      border-right-width: 0;
+      border-left-width: 0;
+      margin-right: auto;
+      margin-left: auto;
+      margin-bottom: 0;
+      .profile-basic {
+        .image-container {
+          img {
+            cursor: pointer;
+            width: 100%;
+            height: auto;
+            -webkit-transition: opacity 0.4s ease-in-out;
+            -moz-transition: opacity 0.4s ease-in-out;
+            -o-transition: opacity 0.4s ease-in-out;
+            &:hover {
+              opacity: 0.5;
+            }
+            &.img-default {
+              height: 150px;
+            }
+          }
+        }
+        a {
+          cursor: pointer;
+          &:hover {
+            text-decoration: none;
+          }
+          .not-known {
+            color: #888;
+          }
+          .male {
+            color: #805BF5;
+          }
+          .female {
+            color: #E2529D;
+          }
+          .skype-id {
+            padding-right: 15px;
+            padding-left: 15px;
+            .text-center();
+            margin-bottom: 0;
+          }
+          .name {
+            text-align: center;
+            padding-right: 15px;
+            padding-left: 15px;
+          }
+        }
+        .age, .location {
+          display: none;
+        }
+      }
+      .profile-optional {
+        text-align: center;
+        padding-right: 15px;
+        padding-left: 15px;
+        padding-bottom: 10px;
+        span {
+          padding-left: 5px;
+          &:first-child {
+            padding-left: 0;
+          }
+        }
+      }
+    }
+  }
+  .alert {
+    text-align: center;
+    margin-bottom: 0;
+  }
+  .talks-container, .profile-container {
+    overflow-y: scroll;
+  }
+  .panel-body {
+    min-height: 140px;
+    overflow: hidden;
+    position: relative;
+    text-decoration: none;
+    .panel-body-header {
+      overflow: hidden;
+      padding-bottom: 5px;
+    }
+    .updated {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
+    .post {
+      overflow: hidden;
+      max-height: 500px;
+    }
+    .panel-body-footer {
+      color: #AAA;
+      position: absolute;
+      width: 100%;
+      padding-right: 15px;
+      padding-left: 15px;
+      left: 0;
+      bottom: 0;
+      .remove {
+        @media (max-width: @screen-xs-max) {
+          opacity: 1;
+        }
+        @media (min-width: @screen-md-min) {
+          cursor: pointer;
+          opacity: 0;
+        }
+      }
+      .report {
+        @media (max-width: @screen-xs-max) {
+          opacity: 1;
+        }
+        @media (min-width: @screen-md-min) {
+          cursor: pointer;
+          opacity: 0;
+        }
+      }
+      .created {
+        @media (max-width: @screen-xs-max) {
+          opacity: 1;
+        }
+        @media (min-width: @screen-md-min) {
+          opacity: 0;
+        }
+      }
+    }
+  }
+}
+
+.not-known {
+  color: #888;
+}
+
+.male {
+  color: #805BF5;
+}
+
+.female {
+  color: #E2529D;
+}

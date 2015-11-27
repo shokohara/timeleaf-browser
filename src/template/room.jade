@@ -1,0 +1,171 @@
+.container.container-progressbar(ng-hide="opened || error")
+    progressbar.progress-striped.active(value="100" type="info") 接続しています
+.modal.fade#myModal
+    .modal-dialog
+        .modal-content
+            .modal-body
+                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                    span(aria-hidden='true') ×
+                br
+                br
+                .panel.panel-default
+                    .panel-heading 部屋の設定
+                    .panel-body
+                        form.form(name="roomForm" ng-submit="submitRoom(roomForm)" novalidate)
+                            .form-group(ng-class="roomForm.name.$dirty && roomForm.name.$invalid ? 'has-error' : ''")
+                                label.control-label(for="roomName") 部屋の名前
+                                input.form-control(type="text" id="roomName" name="roomName" ng-model="roomName" placeholder="2-20文字" minlength="2" maxlength="20" required autocomplete="off")
+                                span(ng-messages="roomForm.roomName.$error")
+                                    span.help-block(ng-message="required") 必須入力項目です
+                                    span.help-block(ng-message="minlength") 名前は2文字以上です
+                                    span.help-block(ng-message="maxlength") 名前は20文字以下です
+                            .form-group(ng-class="roomForm.limit.$dirty && roomForm.limit.$invalid ? 'has-error' : ''")
+                                label.control-label(for="limit") 人数制限
+                                input.form-control(type="number" id="limit" name="limit" ng-model="limit" placeholder="2-100" min="2" max="100" required autocomplete="off")
+                                span(ng-messages="roomForm.limit.$error")
+                                    span.help-block(ng-message="min") 2人以上です
+                                    span.help-block(ng-message="max") 100人以下です
+                            .checkbox
+                                label
+                                    input(type="checkbox" name="locked" ng-model="locked")
+                                    | ロック
+                            button.btn.btn-default(type="button" data-dismiss='modal') キャンセル
+                            button.btn.btn-primary 保存
+                .panel.panel-default(ng-show="hasOwner()")
+                    .panel-heading 副オーナーの設定
+                    .panel-body
+                        form.form(name="authoritiesForm" ng-submit="submitAuthorities(roomForm)" novalidate)
+                            .form-group
+                                label.control-label
+                                    .checkbox(ng-repeat="user in users | filter:myFilter" ng-show="hasOwner()")
+                                        label
+                                            input(type="checkbox" checklist-model="authoritiesForm.authorities" checklist-value="user.id" ng-checked="hasAuthority(user)")
+                                            | {{user.name}}
+                            button.btn.btn-default(type="button" data-dismiss='modal') キャンセル
+                            button.btn.btn-primary 保存
+                .panel.panel-default(ng-show="hasOwner()")
+                    .panel-heading ブラックリストの設定
+                    .panel-body
+                        form.form(name="blacklistForm" ng-submit="submitBlacklist(blacklistForm)" novalidate)
+                            .form-group
+                                label.control-label
+                                    .checkbox(ng-repeat="user in users | filter:myFilter" ng-show="hasOwner()")
+                                        label
+                                            input(type="checkbox" checklist-model="blacklistForm.ids" checklist-value="user.id" ng-checked="hasAuthority(user)")
+                                            | {{user.name}}
+                            button.btn.btn-default(type="button" data-dismiss='modal') キャンセル
+                            button.btn.btn-primary 保存
+                .panel.panel-default(ng-show="hasOwner()")
+                    .panel-heading ホワイトリストの設定
+                    .panel-body
+                        form.form(name="whitelistForm" ng-submit="submitWhitelist(whitelistForm)" novalidate)
+                            .form-group
+                                label.control-label
+                                    .checkbox(ng-repeat="user in users | filter:myFilter" ng-show="hasOwner()")
+                                        label
+                                            input(type="checkbox" checklist-model="whitelistForm.ids" checklist-value="user.id" ng-checked="hasAuthority(user)")
+                                            | {{user.name}}
+                            button.btn.btn-default(type="button" data-dismiss='modal') キャンセル
+                            button.btn.btn-primary 保存
+.container.hidden-xs(ng-show="error")
+    .alert.alert-warning
+        div(ng-repeat="e in errors") {{e}}
+.container.hidden-xs(ng-show="opened")
+    .row
+        .col-lg-9.col-md-9.col-sm-8
+            .panel.panel-default.panel-talks
+                .panel-heading
+                    .clearfix
+                        .pull-left
+                            | {{room.name}}
+                        .pull-right
+                            | {{users.length}}/{{room.limit}}
+                            i.fa.fa-bell.hide
+                            i.fa.fa-lock(ng-show="room.locked" tooltip-placement="bottom" tooltip="部屋への入室を制限している時に表示されるマークです。ホワイトリストに登録されているメンバーはこの制限を受けません。")
+                            i.fa.fa-wrench(ng-show="hasOwner() || hasAuthority(user)" ng-click="openModal()")
+                .panel-body.panel-body-talks
+                    .talks-container(ng-style="{{mediaListTalksStyle}}")
+                        ul.media-list.media-list-talks
+                            li.media(ng-repeat="message in messages")
+                                .media-left
+                                .media-body
+                                    .row(ng-if="message.t == 'talk'")
+                                        .col-lg-2.col-md-3.col-sm-4.col-xs-5
+                                            .pull-right(ng-style="{{talkStyle(message.data.talk)}}") {{message.data.user.name}}
+                                        .col-lg-10.col-md-9.col-sm-8.col-xs-7
+                                            div(ng-style="{{talkStyle(message.data.talk)}}") {{message.data.talk.text}}
+                                    .row(ng-if="message.t == 'join'")
+                                        .col-lg-12.col-md-12.col-sm-12.col-xs-12.text-center.system-message
+                                            | ☆ {{message.data.user.name}} さんが入室しました。
+                                    .row(ng-if="message.t == 'quit'")
+                                        .col-lg-12.col-md-12.col-sm-12.col-xs-12.text-center.system-message
+                                            | ☆ {{message.data.user.name}} さんが退室しました。
+                                    .row(ng-if="message.t == 'update_user_name'")
+                                        .col-lg-12.col-md-12.col-sm-12.col-xs-12.text-center.system-message
+                                            | {{message.data.oldUser.name}} さんが名前を {{message.data.updatedUser.name}} に変更しました。
+                                    .row(ng-if="message.t == 'update_room_owner'")
+                                        .col-lg-12.col-md-12.col-sm-12.col-xs-12.text-center.system-message
+                                            | {{message.data.user.name}} さんがオーナーに任命されました。
+                                    .row(ng-if="message.t == 'update_room_limit'")
+                                        .col-lg-12.col-md-12.col-sm-12.col-xs-12.text-center.system-message
+                                            | {{message.data.user.name}} さんが部屋の設定を変更しました。
+                                    .row(ng-if="message.t != 'quit' && message.t != 'join' && message.t != 'talk' && message.t != 'update_user_name'")
+                                        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                    form(ng-submit="submitTalk()" novalidate)
+                        .form-group
+                            input.form-control(type="text" ng-model="talk.text" autocomplete="off" autofocus)
+        .col-lg-3.col-md-3.col-sm-4
+            .panel.panel-default
+                .panel-body-header
+                .panel-body
+                    ul.media-list
+                        li(ng-repeat='user in users')
+                            div(ng-if="!isSelf(user)" ng-style="{{userStyle(user)}}")
+                                .clearfix
+                                    .pull-left
+                                        | {{user.name}}
+                                    .pull-right
+                                        i.fa.fa-twitter.hide
+                                        i.fa.fa-skype.hide
+                                        i.fa.fa-facebook.hide
+                                        i.fa.fa-home(ng-show="isOwner(user)")
+                                        i.fa.fa-check(ng-show="!isOwner(user) && hasAuthority(user)")
+                                        i.fa.fa-eye-slash(ng-show="!isOwner(user) && hasAuthority(user) && isSelf(user)")
+                                        i.fa.fa-neuter.hide
+                                        i.fa.fa-usd.hide
+                                        i.fa.fa-link.hide
+                                        i.fa.fa-heart-o.hide
+                                        i.fa.fa-ban(ng-show="!isOwner(user) && !hasAuthority(user) && (hasOwner() || hasAuthority0())" ng-click="ban(user)")
+                            div(ng-if="isSelf(user)")
+                                .clearfix(ng-hide="showUpdateProfile" ng-style="{{userStyle(user)}}")
+                                    .pull-left
+                                        | {{user.name}}
+                                    .pull-right
+                                        i.fa.fa-twitter.hide
+                                        i.fa.fa-skype.hide
+                                        i.fa.fa-facebook.hide
+                                        i.fa.fa-home(ng-show="isOwner(user)")
+                                        i.fa.fa-check(ng-show="!isOwner(user) && hasAuthority(user)")
+                                        i.fa.fa-eye-slash(ng-show="!isOwner(user) && hasAuthority(user) && isSelf(user)")
+                                        i.fa.fa-neuter.hide
+                                        i.fa.fa-usd.hide
+                                        i.fa.fa-link.hide
+                                        i.fa.fa-heart-o.hide
+                                        i.fa.fa-pencil(ng-click="show()")
+                                div.well(ng-show="showUpdateProfile")
+                                    form(name="userForm" ng-submit="submitUser(userForm)" novalidate)
+                                        .form-group(ng-class="userForm.name.$dirty && userForm.name.$invalid ? 'has-error' : ''")
+                                            .input-group
+                                                input.form-control(type="text" id="name" name="name" ng-model="name" ng-init="name = user.name" placeholder="名前" minlength="2" maxlength="10" required autocomplete="off")
+                                            span(ng-messages="userForm.name.$error")
+                                                span.help-block(ng-message="required") 必須入力項目です
+                                                span.help-block(ng-message="minlength") 名前は2文字以上です
+                                                span.help-block(ng-message="maxlength") 名前は10文字以下です
+                                        .form-group(ng-class="userForm.color.$dirty && userForm.color.$invalid ? 'has-error' : ''")
+                                            .input-group
+                                                span.input-group-addon#basic-addon #
+                                                input.form-control(type="text" id="color" name="color" ng-model="color" minlength="6" maxlength="6" ng-pattern="/^[0-9A-F]{6}$/" placeholder="FFFFFF" aria-describedby="basic-addon" required autocomplete="off")
+                                            span(ng-messages="colorForm.color.$error")
+                                                span.help-block(ng-message="required") 必須入力項目です
+                                        button.btn.btn-default(ng-click="hide()") キャンセル
+                                        button.btn.btn-primary 保存

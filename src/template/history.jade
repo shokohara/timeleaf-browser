@@ -1,0 +1,13 @@
+.container
+    alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert($index)") {{alert.msg}}
+    ul.list-group
+        li.list-group-item(ng-repeat="tweet in tweets")
+            .row
+                .col-lg-4.col-md-4 {{tweet.text}}
+                .col-lg-3.col-md-3 {{tweet.created_at | date:"yyyy年MM月dd日 HH:mm:ss"}}
+                .col-lg-3.col-md-3
+                    button.btn.btn-block.btn-primary(ng-click="copy(tweet)" role="button")
+                        span.glyphicon.glyphicon-repeat コピーして新規投稿
+                .col-lg-2.col-md-2
+                    button.btn.btn-block.btn-danger(ng-click="remove(tweet)" role="button")
+                        span.glyphicon.glyphicon-remove 削除

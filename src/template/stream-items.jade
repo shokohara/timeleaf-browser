@@ -1,0 +1,8 @@
+.list-group-item.stream-item(ng-repeat="post in posts")
+    a.link(href="{{post.user.skype_id | skypeUri}}")
+        div
+            strong.name(ng-class="{'male':post.user.sex=='male','female':post.user.sex=='female','not-known':post.user.sex=='not_known'}") {{post.user.name}}
+            span {{post.user.prefecture | prefectureParentheses}}
+            i.fa.fa-skype {{post.user.skype_id}}
+            span.datetime ・{{post.created_at | date:"HH:mm"}}
+        .text.pre {{post.text}}

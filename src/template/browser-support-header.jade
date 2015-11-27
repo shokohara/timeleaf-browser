@@ -1,0 +1,12 @@
+<!--[if lte IE 8]>
+script(src="https://code.jquery.com/jquery-1.11.2.min.js")
+<![endif]-->
+<!--[if lte IE 9]>
+script.
+    $(function () {
+        $.get("/template/browser-support.html", function (data) {
+            $("body").empty();
+            $("body").append(data);
+        });
+    });
+<![endif]-->

@@ -1,0 +1,14 @@
+.container
+    .col-lg-2
+    .col-lg-8
+        alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert($index)") {{alert.msg}}
+        .well
+            form(name="form" ng-submit="submit()" novalidate)
+                .form-group(ng-class="form.name.$dirty && form.name.$invalid ? 'has-error' : ''")
+                    label.control-label(for="name") 部屋の名前（必須）
+                    input.form-control(type="text" id="name" name="name" placeholder="{{Constant.roomNameMaxLength+'文字まで'}}" ng-model="name" ng-maxlength="Constant.roomNameMaxLength" required)
+                    span(ng-messages="form.name.$error")
+                        span.help-block(ng-message="required") 必須入力項目です
+                        span.help-block(ng-message="maxlength") {{Constant.roomNameMaxLength}}文字以内で入力してください
+                button.btn.btn-primary(type="submit" data-loading-text="作成中...") 作成
+    .col-lg-2

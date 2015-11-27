@@ -1,0 +1,9 @@
+.list-group-item.tweet-box
+    alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert($index)") {{alert.msg}}
+    textarea.form-control(type="text" id="f0" rows="1" placeholder="入力してください" ng-init="todoText=''" ng-model="todoText" ng-focus="focus()")
+    form(ng-submit="submit()" id="f1")
+        textarea.form-control(type="text" id="ff1" rows="5" placeholder="入力してください" ng-init="todoText=''" ng-model="todoText" ng-blur="blur()")
+        .clearfix
+            div.pull-right
+                | {{Constant.textMaxLength - textLength(todoText)}}
+                button.btn.btn-default.btn-lg(type="submit" ng-focus="focus()") 投稿
